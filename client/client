@@ -2,6 +2,7 @@
 
 import zmq
 import os
+import pipes
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
@@ -10,5 +11,5 @@ socket.connect("tcp://dev01.trevorfitzgerald.com:5000")
 socket.setsockopt(zmq.SUBSCRIBE, "message")
 
 while True:
-    message = socket.recv()
-    #os.system("terminal-notifier -message " + message)
+    name, message = socket.recv().split(" ", 1)
+    os.system("terminal-notifier -title 'IRC' -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
