@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+
+import zmq
+import os
+
+context = zmq.Context()
+socket = context.socket(zmq.SUB)
+socket.connect("tcp://dev01.trevorfitzgerald.com:5000")
+
+socket.setsockopt(zmq.SUBSCRIBE, "message")
+
+while True:
+    message = socket.recv()
+    #os.system("terminal-notifier -message " + message)
