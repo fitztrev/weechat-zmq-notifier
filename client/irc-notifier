@@ -13,4 +13,4 @@ socket.setsockopt(zmq.SUBSCRIBE, "message")
 while True:
     queue, data = socket.recv().split(" ", 1)
     name, message = data.split("\t", 1)
-    os.system("terminal-notifier -title 'IRC' -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
+    os.system("terminal-notifier -title 'IRC' -group IRC -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
