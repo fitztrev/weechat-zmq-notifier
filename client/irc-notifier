@@ -4,6 +4,7 @@ import zmq
 import argparse
 import os
 import pipes
+import sys
 
 # get command line argument
 parser = argparse.ArgumentParser(description='Connect to notification queue')
@@ -19,11 +20,14 @@ socket.connect( "tcp://%s:5000" % args.hostname[0] )
 socket.setsockopt(zmq.SUBSCRIBE, "message")
 
 while True:
-    queue, data = socket.recv().split(" ", 1)
-    name, message = data.split("\t", 1)
+    try:
+        queue, data = socket.recv().split(" ", 1)
+        name, message = data.split("\t", 1)
 
-    # Mac OS X
-    os.system("type terminal-notifier >/dev/null 2>&1 && terminal-notifier -title 'IRC' -group IRC -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
+        # Mac OS X
+        os.system("type terminal-notifier >/dev/null 2>&1 && terminal-notifier -title 'IRC' -group IRC -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
 
-    # Linux
-    os.system("type notify-send >/dev/null 2>&1 && notify-send --icon=notification-message-im %s %s" % (pipes.quote(name), pipes.quote(message)))
+        # Linux
+        os.system("type notify-send >/dev/null 2>&1 && notify-send --icon=notification-message-im %s %s" % (pipes.quote(name), pipes.quote(message)))
+    except (KeyboardInterrupt, SystemExit):
+        sys.exit(' Quitting...')
