@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 
 import zmq
+import argparse
 import os
 import pipes
 
+# get command line argument
+parser = argparse.ArgumentParser(description='Connect to notification queue')
+parser.add_argument('hostname', nargs=1, help='The host you want to connect to')
+args = parser.parse_args()
+
+# start socket connection
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socket.connect("tcp://dev01.trevorfitzgerald.com:5000")
+socket.connect( "tcp://%s:5000" % args.hostname[0] )
 
+# subscribe to `message` queue
 socket.setsockopt(zmq.SUBSCRIBE, "message")
 
 while True:
