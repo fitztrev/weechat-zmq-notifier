@@ -6,7 +6,7 @@ import os
 import pipes
 import sys
 
-# get command line argument
+# get command line argument (hostname)
 parser = argparse.ArgumentParser(description='Connect to notification queue')
 parser.add_argument('hostname', nargs=1, help='The host you want to connect to')
 args = parser.parse_args()
@@ -29,5 +29,6 @@ while True:
 
         # Linux
         os.system("type notify-send >/dev/null 2>&1 && notify-send --icon=notification-message-im %s %s" % (pipes.quote(name), pipes.quote(message)))
+
     except (KeyboardInterrupt, SystemExit):
-        sys.exit(' Quitting...')
+        sys.exit(' Quitting... ')

@@ -6,4 +6,28 @@ It's a Weechat plugin that sends notifications of highlights or private messages
 
 On your local machine, you run the client which connects to it. Whenever a new message is received, it'll pass it along to your Notification Center.
 
-Still a work-in-progress.
+## Usage
+
+***On server:***
+
+```
+$ sudo apt-get install python-zmq
+$ ln -s zmq-notifier.py ~/.weechat/python/autoload/zmq-notifier.py
+```
+
+***On client:***
+
+*Mac OS X*
+
+```
+$ brew install zmq
+$ pip install pyzmq
+$ ./irc-notifier <hostname|ip>
+```
+
+*Ubuntu*
+
+```
+$ sudo apt-get install python-zmq
+$ ./irc-notifier <hostname|ip>
+```
