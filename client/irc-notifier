@@ -38,7 +38,12 @@ while True:
         ))
 
         # Linux
-        os.system("type notify-send >/dev/null 2>&1 && notify-send --icon=notification-message-im %s %s" % (pipes.quote(name), pipes.quote(message)))
+        os.system(
+            "type notify-send >/dev/null 2>&1 &&"
+            "notify-send --icon=notification-message-im {0} {1}".format(
+                pipes.quote(name),
+                pipes.quote(message)
+        ))
 
     except (KeyboardInterrupt, SystemExit):
-        sys.exit(' Quitting... ')
+        sys.exit('Quitting...')
