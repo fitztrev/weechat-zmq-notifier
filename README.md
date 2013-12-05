@@ -1,5 +1,7 @@
 ## Weechat ZeroMQ Notifier
 
+[![Build Status](https://travis-ci.org/fitztrev/weechat-zmq-notifier.png?branch=master)](https://travis-ci.org/fitztrev/weechat-zmq-notifier)
+
 I run Weechat inside tmux on a remote server. I miss being able to see desktop notifications of certain events. So I made this.
 
 It's a Weechat plugin that sends notifications of highlights or private messages to ZeroMQ on the server.
@@ -10,7 +12,7 @@ The client works on both Mac OS X and Ubuntu.
 
 ## Usage
 
-#### On server (where Weechat is running)
+#### On the remote machine where Weechat is running
 
 ```
 $ sudo apt-get install python-zmq
@@ -19,9 +21,9 @@ $ ln -s zmq-notifier.py ~/.weechat/python/autoload/zmq-notifier.py
 
 Then, restart Weechat.
 
-#### On client
+#### On your local machine where you want to receive notifications
 
-Mac OS X
+*For Mac OS X:*
 
 ```
 $ gem install terminal-notifier
@@ -30,7 +32,7 @@ $ pip install pyzmq
 $ ./irc-notifier <hostname|ip>
 ```
 
-Ubuntu
+*For Ubuntu:*
 
 ```
 $ sudo apt-get install python-zmq
