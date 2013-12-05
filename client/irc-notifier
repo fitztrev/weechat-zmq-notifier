@@ -10,11 +10,16 @@ import sys
 parser = argparse.ArgumentParser(description='Connect to notification queue')
 parser.add_argument('hostname', nargs=1, help='The host you want to connect to')
 args = parser.parse_args()
+hostname = args.hostname[0]
 
 # start socket connection
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socket.connect( "tcp://%s:5000" % args.hostname[0] )
+try:
+    socket.connect("tcp://%s:5000" % hostname)
+except:
+    print "Cannot make connection to %s." % hostname
+    sys.exit(1)
 
 # subscribe to `message` queue
 socket.setsockopt(zmq.SUBSCRIBE, "message")
