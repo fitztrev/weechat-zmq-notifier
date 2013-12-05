@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/fitztrev/weechat-zmq-notifier.png?branch=master)](https://travis-ci.org/fitztrev/weechat-zmq-notifier)
 
+![Mac Screenshot](screenshot-mac.png)
+
 I run Weechat inside tmux on a remote server. I miss being able to see desktop notifications of certain events. So I made this.
 
 It's a Weechat plugin that sends notifications of highlights or private messages to ZeroMQ on the server.
@@ -9,8 +11,6 @@ It's a Weechat plugin that sends notifications of highlights or private messages
 On your local machine, you run the client which connects to it. Whenever a new message is received, it'll pass it along to your Notification Center.
 
 The client works on both Mac OS X and Ubuntu.
-
-![Mac Screenshot](screenshot-mac.png)
 
 ## Usage
 

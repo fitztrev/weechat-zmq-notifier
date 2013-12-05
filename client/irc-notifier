@@ -30,7 +30,7 @@ while True:
         name, message = data.split("\t", 1)
 
         # Mac OS X
-        os.system("type terminal-notifier >/dev/null 2>&1 && terminal-notifier -title 'IRC' -group IRC -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
+        os.system("type terminal-notifier >/dev/null 2>&1 && terminal-notifier -title 'IRC' -subtitle %s -message %s" % (pipes.quote(name), pipes.quote(message)))
 
         # Linux
         os.system("type notify-send >/dev/null 2>&1 && notify-send --icon=notification-message-im %s %s" % (pipes.quote(name), pipes.quote(message)))
