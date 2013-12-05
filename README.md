@@ -10,6 +10,8 @@ On your local machine, you run the client which connects to it. Whenever a new m
 
 The client works on both Mac OS X and Ubuntu.
 
+![Mac Screenshot](screenshot-mac.png)
+
 ## Usage
 
 #### On the remote machine where Weechat is running
