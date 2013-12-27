@@ -4,6 +4,7 @@ import zmq
 import argparse
 import os
 import pipes
+import re
 import sys
 
 # get command line argument (hostname)
@@ -24,23 +25,22 @@ except:
 # subscribe to `message` queue
 socket.setsockopt(zmq.SUBSCRIBE, "message")
 
+# detect os/notification system
+if os.system("type terminal-notifier >/dev/null 2>&1") == 0:
+    notifiercommand = "terminal-notifier -title 'IRC' -subtitle {0} -message {1}"
+elif os.system("type notify-send >/dev/null 2>&1") == 0:
+    notifiercommand = "notify-send --icon=notification-message-im {0} {1}"
+else:
+    print "Cannot find terminal-notifier or notify-send, so running this will do nothing. Quitting instead."
+    sys.exit(1)
+
 while True:
     try:
         queue, data = socket.recv().split(" ", 1)
         name, message = data.split("\t", 1)
 
-        # Mac OS X
         os.system(
-            "type terminal-notifier >/dev/null 2>&1 &&"
-            "terminal-notifier -title 'IRC' -subtitle {0} -message {1}".format(
-                pipes.quote(name),
-                pipes.quote(message)
-        ))
-
-        # Linux
-        os.system(
-            "type notify-send >/dev/null 2>&1 &&"
-            "notify-send --icon=notification-message-im {0} {1}".format(
+            notifiercommand.format(
                 pipes.quote(name),
                 pipes.quote(message)
         ))
