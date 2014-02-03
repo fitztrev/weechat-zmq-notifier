@@ -9,7 +9,7 @@ import sys
 
 # get command line argument (hostname)
 parser = argparse.ArgumentParser(description='Connect to notification queue')
-parser.add_argument('hostname', nargs=1, help='The host you want to connect to')
+parser.add_argument('hostname', nargs=1, help='Where Weechat is running')
 args = parser.parse_args()
 hostname = args.hostname[0]
 
@@ -29,13 +29,22 @@ socket.setsockopt(zmq.SUBSCRIBE, "message")
 if os.system("type terminal-notifier >/dev/null 2>&1") == 0:
     ismac = True
     openingbrackets = re.compile(r'^([\[\{\<\(])')
-    notifiercommand = "terminal-notifier -title 'IRC' -subtitle {0} -message {1}"
+    notifiercommand = "terminal-notifier -title 'IRC' " \
+                      "-subtitle {0} -message {1}"
 elif os.system("type notify-send >/dev/null 2>&1") == 0:
     ismac = False
     notifiercommand = "notify-send --icon=notification-message-im {0} {1}"
 else:
-    print "Cannot find terminal-notifier or notify-send, so running this will do nothing. Quitting instead."
+    print "Cannot find terminal-notifier or notify-send," \
+          "so running this will do nothing. Quitting instead."
     sys.exit(1)
+
+os.system(
+    notifiercommand.format(
+        "weechat-zmq-notifier",
+        pipes.quote("Successfully started. Now listening for messages.")
+    )
+)
 
 while True:
     try:
@@ -51,7 +60,8 @@ while True:
             notifiercommand.format(
                 pipes.quote(name),
                 pipes.quote(message)
-        ))
+            )
+        )
 
     except (KeyboardInterrupt, SystemExit):
         sys.exit('Quitting...')
